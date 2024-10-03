@@ -1,13 +1,19 @@
 import './App.css'
-import Input from './Components/Input'
-import Button from './Components/Button'
+
+import { useState } from 'react';
 
 function App() {
+  // let item = "";
+  let array =['a','b','c','']
+  const [Value, setValue] = useState("");
 
   return (
     <>
-    <Input ></Input>
-    <Button></Button>
+     <h1>ToDo App</h1>
+     <input placeholder='do somthing....' type='text'value={Value}  onChange={(e) => setValue(e.target.value)} ></input>
+ {/* <Input ></Input> */}
+    {/* <Button></Button> */}
+    <button id="btn" onClick={(event) => { console.log(Value);setValue("");console.log(event)}} >Click me!</button>
     </>
   )
 
