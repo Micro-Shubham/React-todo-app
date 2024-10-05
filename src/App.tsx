@@ -1,12 +1,16 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function App() {
-  let nextId = 0;
+  let nextId = useRef(0);
   // let item = "";
   const [value, setValue] = useState("");
-  const [items, setItems]  = useState<{id:number ;text:string}[]>([]);
+  const [items, setItems] = useState<{ id: number; text: string }[]>([]);
+  //remove item handler
+  const handlerRemoveItem = (id: number) => {
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
 
   return (
     <>
@@ -22,9 +26,9 @@ function App() {
       <button
         id="btn"
         onClick={() => {
-          if(value !="") {
+          if (value != "") {
             setItems((prevItems) =>
-            prevItems.concat({id:nextId, text:value}) 
+              prevItems.concat({ id: nextId.current++, text: value })
             );
           }
           setValue("");
@@ -34,8 +38,11 @@ function App() {
       </button>
       {/* Render  the list  of items  */}
       <ul>
-        {items.map((item) =>(
-          <li key={item.id}>{item.text}</li> //Display  each items text
+        {items.map((item) => (
+          <li key={item.id} onClick={() => handlerRemoveItem(item.id)}
+          style={{cursor:"pointer"}}>
+            {item.text}
+          </li>
         ))}
       </ul>
     </>
